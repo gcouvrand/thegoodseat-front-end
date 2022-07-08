@@ -6,13 +6,15 @@ const Client = axios.create({
 
 export async function SignInApi (email: any, password: any) {
     const loginData = {
-        "email": email,
+        'email': email,
         'password': password
     }
     console.log(loginData)
-    return Client.post('/auth/signin', {
+
+    return Client.post('/auth/signin', 
         loginData
-    }).then(response => {
-        return response.data.body
+    ).then((response) => {
+        console.log(response.data)
+        return response.data
     })
 }

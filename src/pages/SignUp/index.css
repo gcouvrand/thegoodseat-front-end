@@ -1,0 +1,152 @@
+.wrapper {
+    margin-top: 30px;
+    max-width: 315px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .signup--button {
+    position: relative;
+    left: 35%;
+    width: 100px;
+    height: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    background-image: linear-gradient(90deg, #4d3cad 1.18%, #338ca7 100%);
+    color: white;
+    border-radius: 8px;
+    border: none;
+  }
+  
+  .signup--link-to-sign-in {
+    margin-top: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: center;
+    color: #338ca7;
+  }
+  
+  .signup--textfield {
+    margin-top: 10px;
+    position: relative;
+    margin-bottom: 30px;
+  }
+  
+  input {
+    font-size: 16px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #757575;
+    background: transparent;
+    color: black;
+  }
+  input:focus {
+    outline: none;
+  }
+  
+  /* LABEL ======================================= */
+  label {
+    color: #338ca7;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+  }
+  
+  /* active state */
+  input:focus ~ label,
+  input:valid ~ label {
+    top: -10px;
+    font-size: 14px;
+    color: #338ca7;
+  }
+  
+  /* BOTTOM BARS ================================= */
+  .signup--textfield-bar {
+    position: relative;
+    display: block;
+    width: 315px;
+  }
+  .signup--textfield-bar:before,
+  .signup--textfield-bar:after {
+    content: "";
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: #5264ae;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+  }
+  .signup--textfield-bar:before {
+    left: 50%;
+  }
+  .signup--textfield-bar:after {
+    right: 50%;
+  }
+  
+  /* active state */
+  input:focus ~ .signup--textfield-bar:before,
+  input:focus ~ .signup--textfield-bar:after {
+    width: 50%;
+  }
+  
+  /* HIGHLIGHTER ================================== */
+  .signup--textfield-highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  
+  /* active state */
+  input:focus ~ .signup--textfield-highlight {
+    -webkit-animation: inputHighlighter 0.3s ease;
+    -moz-animation: inputHighlighter 0.3s ease;
+    animation: inputHighlighter 0.3s ease;
+  }
+  
+  /* ANIMATIONS ================ */
+  @-webkit-keyframes inputHighlighter {
+    from {
+      background: #5264ae;
+    }
+    to {
+      width: 0;
+      background: transparent;
+    }
+  }
+  @-moz-keyframes inputHighlighter {
+    from {
+      background: #5264ae;
+    }
+    to {
+      width: 0;
+      background: transparent;
+    }
+  }
+  @keyframes inputHighlighter {
+    from {
+      background: #5264ae;
+    }
+    to {
+      width: 0;
+      background: transparent;
+    }
+  }
+  
