@@ -23,10 +23,10 @@
 }
 
 .input--error-message {
-    font-size: 13px;
-    margin-top: -25px;
-    text-align: center;
-    color: red;
+  font-size: 13px;
+  margin-top: -25px;
+  text-align: center;
+  color: red;
 }
 
 .signup--button {

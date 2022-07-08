@@ -49,15 +49,12 @@ function SignInBox() {
   return (
     <div className="wrapper">
       <form className="signin--form">
+        <Textfield onblur={onChangeEmail} onfocus={clearError} label="email" />
         <Textfield
-          onchange={onChangeEmail}
+          onblur={onChangePassword}
           onfocus={clearError}
-          label='email'
-        />
-        <Textfield
-          onchange={onChangePassword}
-          onfocus={clearError}
-          label='password'
+          label="password"
+          type="password"
         />
 
         {errorMessage ? (

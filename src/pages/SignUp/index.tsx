@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Textfield from "../../components/Textfield";
-import { SignUpApi } from "../../services/ApiCall";
+import { SignInApi, SignUpApi } from "../../services/ApiCall";
 import "./index.css";
 
 function SignUpBox() {
@@ -16,9 +16,8 @@ function SignUpBox() {
   const [errorLastName, setErrorLastName] = useState(false);
   const [firstName, setFirstName] = useState({ firstName: "" });
   const [errorFirstName, setErrorFirstName] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState(false);
-  const dispatch = useDispatch();
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const onChangeEmail = (e: any) => {
     setEmail(e.target.value);
@@ -67,44 +66,45 @@ function SignUpBox() {
     }
   };
 
-  const clearError = () => {
-    setErrorMessage(false);
-  };
-
   const handleSubmit = async (e: any) => {
     try {
       e.preventDefault();
-      const data = await SignUpApi(
-        email,
-        password,
-        phoneNumber,
-        lastName,
-        firstName
-      );
+      if (
+        email.email === "" ||
+        password.password == "" ||
+        phoneNumber.phoneNumber == "" ||
+        lastName.lastName == "" ||
+        firstName.firstName == ""
+      ) {
+        setErrorMessage(true);
+      } else {
+        setErrorMessage(false);
+        const data = await SignUpApi(
+          email,
+          password,
+          phoneNumber,
+          lastName,
+          firstName
+        );
 
-      if (data) {
-        setConfirmationMessage(true);
+        if (data) {
+          setConfirmationMessage(true);
+        }
       }
-    } catch (e: any) {
-      setErrorMessage(true);
-    }
+    } catch (e: any) {}
   };
 
   return (
     <div className="wrapper">
       <form className="signup--form">
-        <Textfield onblur={onChangeEmail} onfocus={clearError} label="email" />
+        <Textfield onblur={onChangeEmail} label="email" type="text" />
         {errorEmail ? (
           <p className="input--error-message">
             Please enter a valid email adress
           </p>
         ) : null}
 
-        <Textfield
-          onblur={onChangePassword}
-          onfocus={clearError}
-          label="password"
-        />
+        <Textfield onblur={onChangePassword} label="password" type="password" />
 
         {errorPassword ? (
           <p className="input--error-message">
@@ -115,8 +115,8 @@ function SignUpBox() {
 
         <Textfield
           onblur={onChangePhoneNumber}
-          onfocus={clearError}
           label="phone number"
+          type="text"
         />
 
         {errorPhoneNumber ? (
@@ -126,11 +126,7 @@ function SignUpBox() {
           </p>
         ) : null}
 
-        <Textfield
-          onblur={onChangeLastName}
-          onfocus={clearError}
-          label="last name"
-        />
+        <Textfield onblur={onChangeLastName} label="last name" type="text" />
 
         {errorLastName ? (
           <p className="input--error-message">
@@ -139,11 +135,7 @@ function SignUpBox() {
           </p>
         ) : null}
 
-        <Textfield
-          onblur={onChangeFirstName}
-          onfocus={clearError}
-          label="first name"
-        />
+        <Textfield onblur={onChangeFirstName} label="first name" type="text" />
 
         {errorFirstName ? (
           <p className="input--error-message">
@@ -153,24 +145,20 @@ function SignUpBox() {
         ) : null}
 
         {errorMessage ? (
-          <p className="signin--form-error">
-            Can't log in. Please check your credentials !
-          </p>
-        ) : (
-          ""
-        )}
+          <p className="signin--form-error">You need to fill all inputs</p>
+        ) : null}
 
-        {errorMessage ? (
+        {confirmationMessage ? (
           <p className="signin--form-confirmation">
-            You successfully created a new account ! You can now log in.
+            You successfully created a new account ! You can now login on the
+            sign in page with your credentials
           </p>
         ) : (
-          ""
+          <button className="signup--button" onClick={handleSubmit}>
+            SIGN UP
+          </button>
         )}
 
-        <button className="signup--button" onClick={handleSubmit}>
-          SIGN UP
-        </button>
         <div className="signup--link-to-sign-in">
           <Link to="/">
             If you already have an account, go to the login page by clicking
