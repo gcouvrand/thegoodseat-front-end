@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 20px;
+  opacity: 1;
+  width: 100%;
+  background-image: linear-gradient(90deg, #4d3cad 1.18%, #338ca7 100%);
+}
+
+.header--title {
+  color: white;
+  font-size: 2.5rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+nav {
+  position: absolute;
+  right: 20px;
+  text-decoration: underline;
+  color: white;
+}
+
+nav li {
+  display: inline;
+  padding: 20px;
+}
