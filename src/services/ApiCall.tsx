@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const Client = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://thegoodseat-back-end.herokuapp.com'
 })
 
 export async function SignInApi (email: any, password: any) {
