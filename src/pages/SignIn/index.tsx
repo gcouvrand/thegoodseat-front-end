@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import Textfield from "../../components/Textfield";
 import { updateUserInfos } from "../../redux/Reducer/loginSlice";
 import { SignInApi } from "../../services/ApiCall";
 import "./index.css";
@@ -48,29 +49,16 @@ function SignInBox() {
   return (
     <div className="wrapper">
       <form className="signin--form">
-        <div className="signin--textfield">
-          <input
-            type="text"
-            required
-            onChange={onChangeEmail}
-            onFocus={clearError}
-          />
-          <span className="signin--textfield-highlight"></span>
-          <span className="signin--textfield-bar"></span>
-          <label>email</label>
-        </div>
-
-        <div className="signin--textfield">
-          <input
-            type="text"
-            required
-            onChange={onChangePassword}
-            onFocus={clearError}
-          />
-          <span className="signin--textfield-highlight"></span>
-          <span className="signin--textfield-bar"></span>
-          <label>password</label>
-        </div>
+        <Textfield
+          onchange={onChangeEmail}
+          onfocus={clearError}
+          label='email'
+        />
+        <Textfield
+          onchange={onChangePassword}
+          onfocus={clearError}
+          label='password'
+        />
 
         {errorMessage ? (
           <p className="signin--form-error">
