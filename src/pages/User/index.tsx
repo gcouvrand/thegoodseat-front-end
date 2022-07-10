@@ -36,7 +36,7 @@ function User() {
 
   // @ts-ignore
   Geocode.setApiKey("AIzaSyAK4AZwL2SORNbrhOUfc2ZoplrgSZUNIeY");
-  const [map, setMap]: any = useState(null);
+  const [, setMap]: any = useState(null);
   const [isOffersArrayLoading, setIsOffersArrayLoading]: any = useState(false);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const distance = useRef();
@@ -69,11 +69,6 @@ function User() {
 
   function generateRandomInteger(max: any) {
     return Math.floor(Math.random() * max + 1);
-  }
-  function clearRoute() {
-    setDirectionsResponse(null);
-    originRef.current.value = "";
-    destiantionRef.current.value = "";
   }
 
   useEffect(() => {
@@ -254,23 +249,18 @@ function User() {
                   boxShadow="0 10px 30px #CBD5E0"
                 >
                   <StatLabel
-                    key={each.search.id}
                     fontSize={{ base: "12px", md: "18px" }}
                     fontWeight={600}
                   >
                     Gary
                   </StatLabel>
                   <StatNumber
-                    key={each.search.id}
                     fontSize={{ base: "14px", md: "20px" }}
                     color="green"
                   >
                     {each.displayPrice}
                   </StatNumber>
-                  <StatHelpText
-                    key={each.search.id}
-                    fontSize={{ base: "12px", md: "18px" }}
-                  >
+                  <StatHelpText fontSize={{ base: "12px", md: "18px" }}>
                     Temps d'attente estimée : {generateRandomInteger(60)}{" "}
                     minutes
                   </StatHelpText>
