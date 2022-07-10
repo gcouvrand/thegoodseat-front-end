@@ -10,7 +10,7 @@ import GuestRoute from "./components/GuestRoute";
 export default function App() {
   return (
     <Router>
-      <Header />
+      <Header title="the good seat" signin="Sign in" signup="Sign up" />
       <Routes>
         <Route
           index

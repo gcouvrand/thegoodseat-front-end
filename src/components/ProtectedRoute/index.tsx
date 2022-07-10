@@ -7,7 +7,6 @@ interface Props {
 
 const ProtectedRoute = ({ children }: Props) => {
   const token = useSelector((state: any) => state.loginReducer.token);
-  console.log(token);
   if (!token) {
     return <Navigate to="/" />;
   }

@@ -6,6 +6,7 @@ import {
   Input,
   SkeletonText,
   Spinner,
+  Stack,
   Stat,
   StatHelpText,
   StatLabel,
@@ -23,6 +24,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { GetOffersApi } from "../../services/ApiCall";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { MapMouseEvent } from "mapbox-gl";
 
 const center = { lat: 48.8584, lng: 2.2945 };
 
@@ -35,18 +37,18 @@ function User() {
 
   // @ts-ignore
   Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-  const [, setMap]: any = useState(null);
+  const [map, setMap]: any = useState(null);
   const [isOffersArrayLoading, setIsOffersArrayLoading]: any = useState(false);
   const [directionsResponse, setDirectionsResponse] = useState(null);
-  const distance: any = useRef();
+  const distance = useRef();
   const startLat: any = useRef();
   const startLong: any = useRef();
   const endLat: any = useRef();
   const endLong: any = useRef();
-  const startAddress: any = useRef();
-  const endAddress: any = useRef();
-  const startCountry: any = useRef();
-  const endCountry: any = useRef();
+  const startAddress = useRef();
+  const endAddress = useRef();
+  const startCountry = useRef();
+  const endCountry = useRef();
 
   const [offers, setOffers]: any = useState(null);
 
@@ -66,6 +68,9 @@ function User() {
   const originRef: any = useRef();
   const destiantionRef: any = useRef();
 
+  function generateRandomInteger(max: any) {
+    return Math.floor(Math.random() * max + 1);
+  }
   function clearRoute() {
     setDirectionsResponse(null);
     originRef.current.value = "";
@@ -73,10 +78,7 @@ function User() {
   }
 
   useEffect(() => {
-    setTimeout(function () {
-      setIsOffersArrayLoading(false);
-      clearRoute();
-    }, 100);
+    setIsOffersArrayLoading(false);
   }, [offers]);
 
   if (!isLoaded) {
@@ -211,10 +213,7 @@ function User() {
               />
             </Autocomplete>
           </Box>
-          <div>
-            {" "}
-            <ArrowForwardIcon w={7} h={7} />{" "}
-          </div>
+          <ArrowForwardIcon w={7} h={7} />{" "}
           <Box flexGrow={{ base: 0, md: 1 }}>
             <Autocomplete>
               <Input
@@ -224,9 +223,8 @@ function User() {
               />
             </Autocomplete>
           </Box>
-
           <Button
-            marginTop={5}
+            size="sm"
             colorScheme="facebook"
             type="submit"
             onClick={calculateRoute}
@@ -234,40 +232,58 @@ function User() {
             Get Offers
           </Button>
         </HStack>
-        <HStack spacing="50px" m={5}>
-          {offers
-            ? offers.map(function (each: any) {
-                return (
-                  <Stat
-                    border="solid"
-                    borderWidth="2px"
-                    w={250}
-                    borderRadius={15}
-                    p={3}
-                  >
-                    <StatLabel fontSize={16} fontWeight={600}>
-                      Gary
-                    </StatLabel>
-                    <StatNumber color="green">{each.displayPrice}</StatNumber>
-                    <StatHelpText>
-                      Temps d'attente estimée : 20 minutes
-                    </StatHelpText>
-                  </Stat>
-                );
-              })
-            : null}
-
-          {isOffersArrayLoading ? (
-            <Spinner
-              m={5}
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-            />
-          ) : null}
-        </HStack>
       </Box>
+      <Stack
+        spacing={{ base: "10px", md: "70px" }}
+        m={5}
+        marginLeft={{ base: "50px" }}
+        width="90%"
+        direction={{ base: "column", md: "row" }}
+      >
+        {offers
+          ? offers.map(function (each: any) {
+              return (
+                <Stat
+                  border="solid"
+                  borderColor="#EDF2F7"
+                  borderWidth="1px"
+                  w={250}
+                  borderRadius={15}
+                  p={1}
+                  backgroundColor="#EDF2F7"
+                  boxShadow="0 10px 30px #CBD5E0"
+                >
+                  <StatLabel
+                    fontSize={{ base: "12px", md: "18px" }}
+                    fontWeight={600}
+                  >
+                    Gary
+                  </StatLabel>
+                  <StatNumber
+                    fontSize={{ base: "14px", md: "20px" }}
+                    color="green"
+                  >
+                    {each.displayPrice}
+                  </StatNumber>
+                  <StatHelpText fontSize={{ base: "12px", md: "18px" }}>
+                    Temps d'attente estimée : {generateRandomInteger(60)}{" "}
+                    minutes
+                  </StatHelpText>
+                </Stat>
+              );
+            })
+          : null}
+
+        {isOffersArrayLoading ? (
+          <Spinner
+            m={5}
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+          />
+        ) : null}
+      </Stack>
       <Box h="100%" w="100%">
         <GoogleMap
           center={center}
@@ -280,6 +296,7 @@ function User() {
             fullscreenControl: false,
           }}
           onLoad={(map) => setMap(map)}
+          onClick={(e) => {}}
         >
           <Marker position={center} />
           {directionsResponse && (

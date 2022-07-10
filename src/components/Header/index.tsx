@@ -5,9 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
 
-function Header() {
+function Header(props: any) {
   const isLoggedIn = useSelector((state: any) => state.loginReducer.loggedIn);
-  console.log(isLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,11 +18,12 @@ function Header() {
   return (
     <header>
       <Link to="/">
-        <h2 className="header--title">The Good Seat</h2>
+        <h2 className="header--title">{props.title}</h2>
       </Link>
       <nav>
         {isLoggedIn ? (
           <Button
+            size='sm'
             colorScheme="red"
             rightIcon={<ArrowForwardIcon />}
             onClick={handleLogout}
@@ -33,10 +33,10 @@ function Header() {
         ) : (
           <ul>
             <Link to="/">
-              <li>Sign in</li>
+              <li>{props.signin}</li>
             </Link>
             <Link to="/signup">
-              <li>Sign up</li>
+              <li>{props.signup}</li>
             </Link>
           </ul>
         )}
