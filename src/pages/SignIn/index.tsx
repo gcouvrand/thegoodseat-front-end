@@ -1,17 +1,22 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input, Stack } from "@chakra-ui/react";
-import { SetStateAction, useState } from "react";
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  Stack,
+} from "@chakra-ui/react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Textfield } from "../../components/Textfield";
 import { updateUserInfos } from "../../redux/Reducer/loginSlice";
 import { SignInApi } from "../../services/ApiCall";
 import "./index.css";
 
 interface IEmail {
-  email: string,
+  email: string;
 }
 interface IPassword {
-  password: string,
+  password: string;
 }
 
 function SignInBox() {
@@ -21,19 +26,21 @@ function SignInBox() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onChangeEmail = (e: { target: { value: SetStateAction<IEmail>; }; }) => {
+  const onChangeEmail = (e: any) => {
     setEmail(e.target.value);
   };
 
-  const onChangePassword = (e: { target: { value: SetStateAction<IPassword>; }; }) => {
+  const onChangePassword = (e: any) => {
     setPassword(e.target.value);
   };
 
+  /*
   const clearError = () => {
     setErrorMessage(false);
   };
+  */
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     try {
       e.preventDefault();
       const data = await SignInApi(email, password);
@@ -64,24 +71,27 @@ function SignInBox() {
             placeholder="email"
             id="email"
             type="email"
-            onChange={(e) => onChangeEmail}
+            onChange={onChangeEmail}
           />
           <Input
             variant="outline"
             placeholder="password"
             id="password"
             type="password"
-            onChange={(e) => onChangePassword}
+            onChange={onChangePassword}
           />
-        {errorMessage ? (
-          <FormErrorMessage>Can't login. Check your credentials</FormErrorMessage>
-        ) : (
-          ""
-        )}
+          {errorMessage ? (
+            <FormErrorMessage>
+              Can't login. Check your credentials
+            </FormErrorMessage>
+          ) : (
+            ""
+          )}
 
-        <Button colorScheme="facebook" onClick={handleSubmit}>Sign in</Button>
+          <Button colorScheme="facebook" onClick={handleSubmit}>
+            Sign in
+          </Button>
         </Stack>
-
 
         <div className="signin--link-to-sign-up">
           <Link to="/signup">

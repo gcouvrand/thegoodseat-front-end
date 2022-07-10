@@ -3,16 +3,12 @@ import {
   FormControl,
   FormErrorMessage,
   Input,
-  InputGroup,
-  InputLeftElement,
   Stack,
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { Textfield } from "../../components/Textfield";
-import { SignInApi, SignUpApi } from "../../services/ApiCall";
+import { useNavigate } from "react-router-dom";
+import { SignUpApi } from "../../services/ApiCall";
 import "./index.css";
 
 function SignUpBox() {
@@ -33,7 +29,7 @@ function SignUpBox() {
 
   const onChangeEmail = (e: any) => {
     setEmail(e.target.value);
-    if (!e.target.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+    if (!e.target.value.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
       setErrorEmail(true);
     } else {
       setErrorEmail(false);
@@ -81,17 +77,17 @@ function SignUpBox() {
     navigate("/");
   };
 
-  const toast = useToast()
+  const toast = useToast();
 
   const handleSubmit = async (e: any) => {
     try {
       e.preventDefault();
       if (
         email.email === "" ||
-        password.password == "" ||
-        phoneNumber.phoneNumber == "" ||
-        lastName.lastName == "" ||
-        firstName.firstName == ""
+        password.password === "" ||
+        phoneNumber.phoneNumber === "" ||
+        lastName.lastName === "" ||
+        firstName.firstName === ""
       ) {
         setErrorMessage(true);
       } else {
@@ -112,7 +108,7 @@ function SignUpBox() {
             status: "success",
             duration: 5000,
             isClosable: true,
-          })          
+          });
         }
       }
     } catch (e: any) {}

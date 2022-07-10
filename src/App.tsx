@@ -5,7 +5,6 @@ import SignUp from "./pages/SignUp";
 import User from "./pages/User";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PageNotFound from "./pages/PageNotFound";
-import { ChakraProvider, theme } from "@chakra-ui/react";
 import GuestRoute from "./components/GuestRoute";
 
 export default function App() {

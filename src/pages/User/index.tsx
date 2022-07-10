@@ -1,31 +1,23 @@
 import {
   Box,
   Button,
-  ButtonGroup,
-  Divider,
   Flex,
   HStack,
   Input,
   SkeletonText,
   Spinner,
-  Stack,
   Stat,
   StatHelpText,
   StatLabel,
   StatNumber,
-  Tag,
-  Text,
 } from "@chakra-ui/react";
-
 import Geocode from "react-geocode";
-
 import {
   useJsApiLoader,
   GoogleMap,
   Marker,
   Autocomplete,
   DirectionsRenderer,
-  Data,
 } from "@react-google-maps/api";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -35,20 +27,18 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 const center = { lat: 48.8584, lng: 2.2945 };
 
 function User() {
-
-  const { isLoaded } = useJsApiLoader ({
-  // @ts-ignore
+  const { isLoaded } = useJsApiLoader({
+    // @ts-ignore
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
   });
-  
-    // @ts-ignore
+
+  // @ts-ignore
   Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-  const [map, setMap]: any = useState(null)
+  const [, setMap]: any = useState(null);
   const [isOffersArrayLoading, setIsOffersArrayLoading]: any = useState(false);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const distance: any = useRef();
-  const [duration, setDuration] = useState("");
   const startLat: any = useRef();
   const startLong: any = useRef();
   const endLat: any = useRef();
@@ -57,8 +47,6 @@ function User() {
   const endAddress: any = useRef();
   const startCountry: any = useRef();
   const endCountry: any = useRef();
-
-  const salutsalut = "salutsalut";
 
   const [offers, setOffers]: any = useState(null);
 
@@ -79,9 +67,9 @@ function User() {
   const destiantionRef: any = useRef();
 
   function clearRoute() {
-    setDirectionsResponse(null)
-    originRef.current.value = ''
-    destiantionRef.current.value = ''
+    setDirectionsResponse(null);
+    originRef.current.value = "";
+    destiantionRef.current.value = "";
   }
 
   useEffect(() => {
@@ -109,22 +97,16 @@ function User() {
 
     setDirectionsResponse(results);
     distance.current = results.routes[0].legs[0].distance.value.toString();
-    setDuration(results.routes[0].legs[0].duration.text);
     startAddress.current = originRef.current.value;
     endAddress.current = destiantionRef.current.value;
     stops.forEach((element) => {
       element.address = destiantionRef.current.value;
     });
 
-    
-
-
     await Geocode.fromAddress(originRef.current.value).then((response: any) => {
       const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng);
       startLat.current = lat;
       startLong.current = lng;
-      console.log(startLat);
     });
 
     await Geocode.fromAddress(destiantionRef.current.value).then(
@@ -204,7 +186,6 @@ function User() {
     );
 
     setOffers(data);
-    console.log(data);
   }
 
   return (
@@ -215,15 +196,13 @@ function User() {
       h="100vh"
       w="100%"
     >
-      <Box
-        p={4}
-        bgColor="white"
-        shadow="base"
-        w="100%"
-        zIndex="1"
-      >
-        <HStack spacing={2} justifyContent="space-between" flexDirection={{base:"column", md:"row"}}>
-          <Box flexGrow={{base: 0, md: 1}}>
+      <Box p={4} bgColor="white" shadow="base" w="100%" zIndex="1">
+        <HStack
+          spacing={2}
+          justifyContent="space-between"
+          flexDirection={{ base: "column", md: "row" }}
+        >
+          <Box flexGrow={{ base: 0, md: 1 }}>
             <Autocomplete>
               <Input
                 type="text"
@@ -236,8 +215,8 @@ function User() {
             {" "}
             <ArrowForwardIcon w={7} h={7} />{" "}
           </div>
-          <Box flexGrow={{base: 0, md: 1}}>
-                        <Autocomplete>
+          <Box flexGrow={{ base: 0, md: 1 }}>
+            <Autocomplete>
               <Input
                 type="text"
                 placeholder="Arrival address"
@@ -246,21 +225,29 @@ function User() {
             </Autocomplete>
           </Box>
 
-            <Button
-              marginTop={5}
-              colorScheme="facebook"
-              type="submit"
-              onClick={calculateRoute}
-            >
-              Get Offers
-            </Button>
+          <Button
+            marginTop={5}
+            colorScheme="facebook"
+            type="submit"
+            onClick={calculateRoute}
+          >
+            Get Offers
+          </Button>
         </HStack>
         <HStack spacing="50px" m={5}>
           {offers
             ? offers.map(function (each: any) {
                 return (
-                  <Stat border="solid" borderWidth="2px" w={250} borderRadius={15} p={3}>
-                    <StatLabel fontSize={16} fontWeight={600}>Gary</StatLabel>
+                  <Stat
+                    border="solid"
+                    borderWidth="2px"
+                    w={250}
+                    borderRadius={15}
+                    p={3}
+                  >
+                    <StatLabel fontSize={16} fontWeight={600}>
+                      Gary
+                    </StatLabel>
                     <StatNumber color="green">{each.displayPrice}</StatNumber>
                     <StatHelpText>
                       Temps d'attente estimée : 20 minutes
@@ -292,7 +279,7 @@ function User() {
             mapTypeControl: false,
             fullscreenControl: false,
           }}
-          onLoad={map => setMap(map)}
+          onLoad={(map) => setMap(map)}
         >
           <Marker position={center} />
           {directionsResponse && (

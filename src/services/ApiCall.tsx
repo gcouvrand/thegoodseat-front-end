@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 const Client = axios.create({
   baseURL: "http://localhost:3000",
@@ -10,10 +9,8 @@ export async function SignInApi(email: any, password: any) {
     email: email,
     password: password,
   };
-  console.log(loginData);
 
   return Client.post("/auth/signin", loginData).then((response) => {
-    console.log(response.data);
     return response.data;
   });
 }
@@ -33,10 +30,8 @@ export async function SignUpApi(
     firstName: firstName,
     isPhoneNumberVerified: true,
   };
-  console.log(signUpData);
 
   return Client.post("/auth/signup", signUpData).then((response) => {
-    console.log(response.data);
     return response.data;
   });
 }
@@ -71,10 +66,9 @@ export async function GetOffersApi(
     providerList: providerList,
     nbrOfPassenger: nbrOfPassenger,
     stops: stops,
-    token: token
+    token: token,
   };
 
-  console.log(getOffersData);
   return Client.post("/offers/get-offers", getOffersData).then((response) => {
     return response.data;
   });
