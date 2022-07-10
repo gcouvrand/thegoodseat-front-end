@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  userId: "",
   firstName: "",
   lastName: "",
   token: "",
@@ -13,6 +14,7 @@ const loginSlice = createSlice({
   reducers: {
     updateUserInfos: (state, action) => {
       return (state = {
+        userId: action.payload.userId,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
         token: action.payload.token,
@@ -21,6 +23,7 @@ const loginSlice = createSlice({
     },
     clearUserInfos: (state) => {
       return (state = {
+        userId: "",
         firstName: "",
         lastName: "",
         token: "",

@@ -5,14 +5,30 @@ import SignUp from "./pages/SignUp";
 import User from "./pages/User";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PageNotFound from "./pages/PageNotFound";
+import { ChakraProvider, theme } from "@chakra-ui/react";
+import GuestRoute from "./components/GuestRoute";
 
 export default function App() {
   return (
     <Router>
       <Header />
       <Routes>
-        <Route index element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route
+          index
+          element={
+            <GuestRoute>
+              <Home />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <GuestRoute>
+              <SignUp />
+            </GuestRoute>
+          }
+        />
         <Route
           path="/user"
           element={

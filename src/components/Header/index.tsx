@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import "./index.css";
 import { clearUserInfos } from "../../redux/Reducer/loginSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { Button } from "@chakra-ui/react";
+
 
 function Header() {
   const isLoggedIn = useSelector((state: any) => state.loginReducer.loggedIn);
@@ -15,15 +18,13 @@ function Header() {
   }
 
   return (
-    <header className="header">
+    <header>
       <Link to="/">
         <h2 className="header--title">The Good Seat</h2>
       </Link>
       <nav>
         {isLoggedIn ? (
-          <ul>
-            <li onClick={handleLogout}>Log out</li>
-          </ul>
+            <Button colorScheme="red" rightIcon={<ArrowForwardIcon />} onClick={handleLogout}>Log out</Button>
         ) : (
           <ul>
             <Link to="/">

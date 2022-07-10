@@ -1,23 +1,35 @@
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Stack,
+  useToast,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import Textfield from "../../components/Textfield";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Textfield } from "../../components/Textfield";
 import { SignInApi, SignUpApi } from "../../services/ApiCall";
 import "./index.css";
 
 function SignUpBox() {
-  const [email, setEmail] = useState({ email: "" });
+  const [email, setEmail]: any = useState({ email: "" });
   const [errorEmail, setErrorEmail] = useState(false);
-  const [password, setPassword] = useState({ password: "" });
+  const [password, setPassword]: any = useState({ password: "" });
   const [errorPassword, setErrorPassword] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState({ phoneNumber: "" });
+  const [phoneNumber, setPhoneNumber]: any = useState({ phoneNumber: "" });
   const [errorPhoneNumber, setErrorPhoneNumber] = useState(false);
-  const [lastName, setLastName] = useState({ lastName: "" });
+  const [lastName, setLastName]: any = useState({ lastName: "" });
   const [errorLastName, setErrorLastName] = useState(false);
-  const [firstName, setFirstName] = useState({ firstName: "" });
+  const [firstName, setFirstName]: any = useState({ firstName: "" });
   const [errorFirstName, setErrorFirstName] = useState(false);
-  const [confirmationMessage, setConfirmationMessage] = useState(false);
+  const [redirectButton, setRedirectButton]: any = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
+
+  let navigate = useNavigate();
 
   const onChangeEmail = (e: any) => {
     setEmail(e.target.value);
@@ -65,6 +77,11 @@ function SignUpBox() {
       setErrorFirstName(false);
     }
   };
+  const redirectToLoginPage = () => {
+    navigate("/");
+  };
+
+  const toast = useToast()
 
   const handleSubmit = async (e: any) => {
     try {
@@ -88,7 +105,14 @@ function SignUpBox() {
         );
 
         if (data) {
-          setConfirmationMessage(true);
+          setRedirectButton(true);
+          toast({
+            title: "Account created !",
+            description: "You can now go to the login page to sign in.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          })          
         }
       }
     } catch (e: any) {}
@@ -96,76 +120,72 @@ function SignUpBox() {
 
   return (
     <div className="wrapper">
-      <form className="signup--form">
-        <Textfield onblur={onChangeEmail} label="email" type="text" />
-        {errorEmail ? (
-          <p className="input--error-message">
-            Please enter a valid email adress
-          </p>
-        ) : null}
+      <FormControl isInvalid={errorMessage}>
+        <Stack spacing={5}>
+          <Input
+            isInvalid={errorEmail}
+            variant="outline"
+            placeholder="email"
+            id="email"
+            type="email"
+            onChange={onChangeEmail}
+          />
 
-        <Textfield onblur={onChangePassword} label="password" type="password" />
+          <Input
+            isInvalid={errorPassword}
+            variant="outline"
+            placeholder="password"
+            id="password"
+            type="password"
+            onChange={onChangePassword}
+          />
 
-        {errorPassword ? (
-          <p className="input--error-message">
-            Password needs to have at least 6 characters and at least 1 upper
-            character and 1 number
-          </p>
-        ) : null}
+          <Input
+            isInvalid={errorPhoneNumber}
+            variant="outline"
+            placeholder="phone number"
+            id="tel"
+            type="tel"
+            onChange={onChangePhoneNumber}
+          />
 
-        <Textfield
-          onblur={onChangePhoneNumber}
-          label="phone number"
-          type="text"
-        />
+          <Input
+            isInvalid={errorLastName}
+            variant="outline"
+            placeholder="last name"
+            id="lastname"
+            type="lastname"
+            onChange={onChangeLastName}
+          />
 
-        {errorPhoneNumber ? (
-          <p className="input--error-message">
-            Phone number needs to be correct and to start with the international
-            code
-          </p>
-        ) : null}
+          <Input
+            isInvalid={errorFirstName}
+            variant="outline"
+            placeholder="first name"
+            id="firstname"
+            type="firstname"
+            onChange={onChangeFirstName}
+          />
 
-        <Textfield onblur={onChangeLastName} label="last name" type="text" />
+          {errorMessage ? (
+            <FormErrorMessage>Please fill all the inputs</FormErrorMessage>
+          ) : null}
 
-        {errorLastName ? (
-          <p className="input--error-message">
-            Last name needs to contain at least 3 characters. Only letters
-            allowed
-          </p>
-        ) : null}
-
-        <Textfield onblur={onChangeFirstName} label="first name" type="text" />
-
-        {errorFirstName ? (
-          <p className="input--error-message">
-            First name needs to contain at least 3 characters. Only letters
-            allowed
-          </p>
-        ) : null}
-
-        {errorMessage ? (
-          <p className="signin--form-error">You need to fill all inputs</p>
-        ) : null}
-
-        {confirmationMessage ? (
-          <p className="signin--form-confirmation">
-            You successfully created a new account ! You can now login on the
-            sign in page with your credentials
-          </p>
-        ) : (
-          <button className="signup--button" onClick={handleSubmit}>
-            SIGN UP
-          </button>
-        )}
-
-        <div className="signup--link-to-sign-in">
-          <Link to="/">
-            If you already have an account, go to the login page by clicking
-            here !
-          </Link>
-        </div>
-      </form>
+          {redirectButton ? (
+            <Button
+              fontSize="13px"
+              colorScheme="green"
+              onClick={redirectToLoginPage}
+            >
+              Go to the login page by clicking on this button
+            </Button>
+          ) : (
+            <Button colorScheme="facebook" onClick={handleSubmit}>
+              Sign in
+            </Button>
+          )}
+        </Stack>
+      </FormControl>
     </div>
   );
 }

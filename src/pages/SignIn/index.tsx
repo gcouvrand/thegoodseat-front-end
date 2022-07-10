@@ -1,23 +1,31 @@
-import { useState } from "react";
+import { Button, FormControl, FormErrorMessage, FormLabel, Input, Stack } from "@chakra-ui/react";
+import { SetStateAction, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Textfield from "../../components/Textfield";
+import { Textfield } from "../../components/Textfield";
 import { updateUserInfos } from "../../redux/Reducer/loginSlice";
 import { SignInApi } from "../../services/ApiCall";
 import "./index.css";
 
+interface IEmail {
+  email: string,
+}
+interface IPassword {
+  password: string,
+}
+
 function SignInBox() {
-  const [email, setEmail] = useState({ email: "" });
-  const [password, setPassword] = useState({ password: "" });
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [email, setEmail] = useState<IEmail>({ email: "" });
+  const [password, setPassword] = useState<IPassword>({ password: "" });
+  const [errorMessage, setErrorMessage] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onChangeEmail = (e: any) => {
+  const onChangeEmail = (e: { target: { value: SetStateAction<IEmail>; }; }) => {
     setEmail(e.target.value);
   };
 
-  const onChangePassword = (e: any) => {
+  const onChangePassword = (e: { target: { value: SetStateAction<IPassword>; }; }) => {
     setPassword(e.target.value);
   };
 
@@ -25,7 +33,7 @@ function SignInBox() {
     setErrorMessage(false);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     try {
       e.preventDefault();
       const data = await SignInApi(email, password);
@@ -33,47 +41,55 @@ function SignInBox() {
       if (data) {
         dispatch(
           updateUserInfos({
+            userId: data.user.id,
             firstName: data.user.firstName,
             lastName: data.user.lastName,
-            token: data.token,
+            token: data.accessToken,
             loggedIn: true,
           })
         );
         navigate("/user");
       }
-    } catch (e: any) {
+    } catch (e) {
       setErrorMessage(true);
     }
   };
 
   return (
     <div className="wrapper">
-      <form className="signin--form">
-        <Textfield onblur={onChangeEmail} onfocus={clearError} label="email" />
-        <Textfield
-          onblur={onChangePassword}
-          onfocus={clearError}
-          label="password"
-          type="password"
-        />
-
+      <FormControl isInvalid={errorMessage}>
+        <Stack spacing={5}>
+          <Input
+            variant="outline"
+            placeholder="email"
+            id="email"
+            type="email"
+            onChange={(e) => onChangeEmail}
+          />
+          <Input
+            variant="outline"
+            placeholder="password"
+            id="password"
+            type="password"
+            onChange={(e) => onChangePassword}
+          />
         {errorMessage ? (
-          <p className="signin--form-error">
-            Can't log in. Please check your credentials !
-          </p>
+          <FormErrorMessage>Can't login. Check your credentials</FormErrorMessage>
         ) : (
           ""
         )}
-        <button className="signin--button" onClick={handleSubmit}>
-          SIGN IN
-        </button>
+
+        <Button colorScheme="facebook" onClick={handleSubmit}>Sign in</Button>
+        </Stack>
+
+
         <div className="signin--link-to-sign-up">
           <Link to="/signup">
             If you don't already have an account, you can create one by clicking
             here !
           </Link>
         </div>
-      </form>
+      </FormControl>
     </div>
   );
 }

@@ -1,11 +1,12 @@
-.header {
+header {
   display: flex;
   align-items: center;
-  height: 50px;
+  height: 5rem;
   padding: 20px;
   opacity: 1;
   width: 100%;
-  background-image: linear-gradient(90deg, #4d3cad 1.18%, #338ca7 100%);
+  background-color: black;
+  box-sizing: border-box;
 }
 
 .header--title {
