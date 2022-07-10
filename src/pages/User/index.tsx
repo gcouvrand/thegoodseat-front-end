@@ -26,12 +26,13 @@ import { GetOffersApi } from "../../services/ApiCall";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 const center = { lat: 48.8584, lng: 2.2945 };
+const libraries: any = ['places'];
 
 function User() {
   const { isLoaded } = useJsApiLoader({
     // @ts-ignore
     googleMapsApiKey: "AIzaSyAK4AZwL2SORNbrhOUfc2ZoplrgSZUNIeY",
-    libraries: ["places"],
+    libraries,
   });
 
   // @ts-ignore
@@ -238,7 +239,6 @@ function User() {
           ? offers.map(function (each: any) {
               return (
                 <Stat
-                  key={each.search.id}
                   border="solid"
                   borderColor="#EDF2F7"
                   borderWidth="1px"
