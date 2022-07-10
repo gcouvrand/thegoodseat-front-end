@@ -12,17 +12,17 @@ import { SignUpApi } from "../../services/ApiCall";
 import "./index.css";
 
 function SignUpBox() {
-  const [email, setEmail]: any = useState({ email: "" });
+  const [email, setEmail] = useState({ email: "" });
   const [errorEmail, setErrorEmail] = useState(false);
-  const [password, setPassword]: any = useState({ password: "" });
+  const [password, setPassword] = useState({ password: "" });
   const [errorPassword, setErrorPassword] = useState(false);
-  const [phoneNumber, setPhoneNumber]: any = useState({ phoneNumber: "" });
+  const [phoneNumber, setPhoneNumber] = useState({ phoneNumber: "" });
   const [errorPhoneNumber, setErrorPhoneNumber] = useState(false);
-  const [lastName, setLastName]: any = useState({ lastName: "" });
+  const [lastName, setLastName] = useState({ lastName: "" });
   const [errorLastName, setErrorLastName] = useState(false);
-  const [firstName, setFirstName]: any = useState({ firstName: "" });
+  const [firstName, setFirstName] = useState({ firstName: "" });
   const [errorFirstName, setErrorFirstName] = useState(false);
-  const [redirectButton, setRedirectButton]: any = useState(false);
+  const [redirectButton, setRedirectButton] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
 
   let navigate = useNavigate();
