@@ -24,19 +24,18 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { GetOffersApi } from "../../services/ApiCall";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { MapMouseEvent } from "mapbox-gl";
 
 const center = { lat: 48.8584, lng: 2.2945 };
 
 function User() {
   const { isLoaded } = useJsApiLoader({
     // @ts-ignore
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: "AIzaSyAK4AZwL2SORNbrhOUfc2ZoplrgSZUNIeY",
     libraries: ["places"],
   });
 
   // @ts-ignore
-  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+  Geocode.setApiKey("AIzaSyAK4AZwL2SORNbrhOUfc2ZoplrgSZUNIeY");
   const [map, setMap]: any = useState(null);
   const [isOffersArrayLoading, setIsOffersArrayLoading]: any = useState(false);
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -244,6 +243,7 @@ function User() {
           ? offers.map(function (each: any) {
               return (
                 <Stat
+                  key={each.search.id}
                   border="solid"
                   borderColor="#EDF2F7"
                   borderWidth="1px"
@@ -254,18 +254,23 @@ function User() {
                   boxShadow="0 10px 30px #CBD5E0"
                 >
                   <StatLabel
+                    key={each.search.id}
                     fontSize={{ base: "12px", md: "18px" }}
                     fontWeight={600}
                   >
                     Gary
                   </StatLabel>
                   <StatNumber
+                    key={each.search.id}
                     fontSize={{ base: "14px", md: "20px" }}
                     color="green"
                   >
                     {each.displayPrice}
                   </StatNumber>
-                  <StatHelpText fontSize={{ base: "12px", md: "18px" }}>
+                  <StatHelpText
+                    key={each.search.id}
+                    fontSize={{ base: "12px", md: "18px" }}
+                  >
                     Temps d'attente estimée : {generateRandomInteger(60)}{" "}
                     minutes
                   </StatHelpText>
