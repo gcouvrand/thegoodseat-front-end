@@ -178,7 +178,7 @@ function SignUpBox() {
             </Button>
           ) : (
             <Button colorScheme="facebook" onClick={handleSubmit}>
-              Sign in
+              Sign up
             </Button>
           )}
         </Stack>
